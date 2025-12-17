@@ -2,18 +2,21 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Phạm Thị Hoàng Linh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Phạm Thị Hoàng Linh</title>
     <style>
-        /* --- CSS STYLING (GIỮ NGUYÊN) --- */
+        /* --- CSS STYLING RESPONSIVE --- */
         body {
             margin: 0; padding: 0; overflow: hidden;
-            background-color: #050505; /* Đen sâu hơn */
+            background-color: #050505;
             font-family: 'Arial', sans-serif;
-            height: 100vh; width: 100vw; user-select: none;
+            height: 100vh; width: 100vw;
+            user-select: none;
+            /* Căn giữa toàn bộ body */
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* Nút Start */
+        /* Nút Start - Responsive */
         #start-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 999;
@@ -21,78 +24,113 @@
             flex-direction: column; transition: opacity 1s ease;
         }
         .start-btn {
-            padding: 15px 40px; font-size: 2rem;
+            padding: 15px 30px; /* Nhỏ lại chút cho mobile */
+            font-size: 1.5rem;
             background: linear-gradient(45deg, #ff0055, #ff3399);
             color: white; border: none; border-radius: 50px;
             cursor: pointer; box-shadow: 0 0 30px #ff0055;
             animation: pulse 1.5s infinite;
-            font-family: 'Verdana', sans-serif; font-weight: bold;
+            font-weight: bold;
+            white-space: nowrap; /* Không xuống dòng */
         }
-        .start-btn:hover { transform: scale(1.1); }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7); }
-            70% { box-shadow: 0 0 0 25px rgba(255, 0, 85, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); }
-        }
-
-        /* Các lớp hiển thị */
-        canvas { position: absolute; top: 0; left: 0; z-index: 1; filter: contrast(1.2); }
+        
+        canvas { position: absolute; top: 0; left: 0; z-index: 1; }
         
         #decoration-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 5; pointer-events: none; overflow: hidden;
         }
+        
         .sticker {
-            position: absolute; font-size: 2rem; opacity: 0.8;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            position: absolute; opacity: 0.8;
             animation: floatAnim 6s ease-in-out infinite;
-        }
-        @keyframes floatAnim {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-25px) rotate(15deg); }
         }
 
         #ui-layer {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; display: flex; justify-content: center; align-items: center;
-            flex-direction: column; pointer-events: none; text-align: center;
+            z-index: 10; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; /* Quan trọng: Căn giữa dọc và ngang */
+            flex-direction: column; 
+            pointer-events: none; 
+            text-align: center;
         }
 
+        /* Responsive Text Sizes */
         .counter {
-            font-size: 15vw; font-weight: bold; color: white;
+            font-weight: bold; color: white;
             opacity: 0; transition: opacity 0.5s;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            font-size: 20vw; /* To trên mobile */
         }
-
+        
         .date-text {
-            font-size: 8vw; color: #00ffff; text-shadow: 0 0 30px #00ffff;
-            opacity: 0; position: absolute; transition: all 1s ease;
+            color: #00ffff; text-shadow: 0 0 30px #00ffff;
+            opacity: 0; 
+            position: absolute; 
+            transition: all 1s ease;
+            font-size: 10vw;
+            top: 65%; /* Đẩy xuống vị trí 65% màn hình (50% là giữa) */
+            left: 50%;
+            transform: translate(-50%, -50%); /* Căn giữa lại cho chuẩn */
+            width: 100%;
         }
 
         .final-msg {
-            opacity: 0; transition: opacity 2s ease; margin-top: 300px; /* Đẩy thấp xuống nữa */
+            opacity: 0; transition: opacity 2s ease; 
+            /* Dùng absolute để đặt vị trí chính xác dưới tim */
+            position: absolute;
+            bottom: 10%; 
+            width: 90%; /* Tránh bị sát lề */
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         h1 {
-            font-size: 5rem; margin: 0; color: #33e7ff;
-            text-shadow: 0 0 25px #99fffa; font-family: 'Verdana', sans-serif;
-            text-transform: uppercase; letter-spacing: 2px;
+            color: #33e7ff; text-shadow: 0 0 25px #99fffa;
+            font-family: 'Verdana', sans-serif; text-transform: uppercase;
+            font-size: 8vw; /* Responsive font size */
+            margin-bottom: 10px;
         }
-        p { font-size: 1.3rem; color: #ddd; margin-top: 15px; font-style: italic; }
-        
+
+        p { 
+            color: #ddd; font-style: italic; 
+            font-size: 4vw; /* Responsive font size */
+        }
+
+        /* Media Query cho PC (Màn hình to) */
+        @media (min-width: 768px) {
+            .counter { font-size: 10rem; }
+            .date-text { font-size: 5rem; }
+            h1 { font-size: 3.5rem; }
+            p { font-size: 1.5rem; }
+            .final-msg { bottom: 15%; }
+            .start-btn { font-size: 2rem; padding: 20px 50px; }
+        }
+
         .zoom-in { animation: zoomEffect 1s forwards; }
         @keyframes zoomEffect {
             0% { transform: scale(0.5); opacity: 0; }
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 0, 85, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 85, 0); }
+        }
     </style>
 </head>
 <body>
 
     <div id="start-screen">
-        <button class="start-btn" onclick="startParty()">Mở Quà Sinh Nhật 🎁</button>
-        <p style="color: #888; margin-top: 20px;">(Click để bắt đầu)</p>
+        <button class="start-btn" onclick="startParty()">Mở Quà 🎁</button>
+        <p style="color: #888; margin-top: 20px; font-size: 1rem;">(Click để bắt đầu)</p>
     </div>
 
     <audio id="bg-music" loop><source src="music.mp3" type="audio/mpeg"></audio>
@@ -110,13 +148,10 @@
     </div>
 
     <script>
-        /* ==========================================
-           CẤU HÌNH LOGIC (Tăng số lượng hạt lên để đẹp hơn)
-           ========================================== */
         const CONFIG = {
-            particleCount: 1200, // Tăng lên 1200 hạt để tim dày và đẹp
+            particleCount: 1000, 
             stickers: ['🎄', '🎂', '🎁', '❄️', '🦌', '🕯️', '🍬', '✨', '💖'],
-            stickerCount: 20
+            stickerCount: 15
         };
 
         const bgMusic = document.getElementById('bg-music');
@@ -126,118 +161,95 @@
             const startScreen = document.getElementById('start-screen');
             startScreen.style.opacity = 0;
             setTimeout(() => startScreen.remove(), 1000);
+            
+            // Re-check size khi bắt đầu để đảm bảo chính xác
+            resize(); 
+            initParticles(); // Tạo hạt sau khi đã có size chuẩn
             createDecorations();
             animate();
             startIntroScript();
         }
 
-        /* ==========================================
-           CORE ANIMATION ENGINE (PHẦN QUAN TRỌNG NHẤT)
-           ========================================== */
         const canvas = document.getElementById('galaxy');
         const ctx = canvas.getContext('2d');
-        let width, height;
-        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
+        let width, height, heartScale, heartOffsetY;
 
-        // Hàm toán học trái tim gốc
+        // HÀM RESIZE THÔNG MINH
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            
+            // Logic Responsive cho tim:
+            // Nếu màn hình nhỏ (mobile), giảm độ to (scale) của tim
+            if (width < 768) {
+                heartScale = width / 25; // Tự động tính toán theo chiều ngang điện thoại
+                heartOffsetY = 0; // Đẩy lên giữa màn hình
+            } else {
+                heartScale = 16; // PC giữ nguyên
+                heartOffsetY = -50;
+            }
+        }
+        window.addEventListener('resize', resize);
+        // Gọi resize ngay lập tức
+        resize();
+
         function heartFunc(t) {
             const x = 16 * Math.pow(Math.sin(t), 3);
             const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
             return { x, y };
         }
 
-        // CLASS: Hạt Galaxy (Đã nâng cấp)
         class GalaxyParticle {
-            constructor() {
-                this.reset(true); // true = khởi tạo ngẫu nhiên ban đầu
-            }
-
+            constructor() { this.reset(true); }
             reset(initial = false) {
-                // 1. Xác định vị trí trên đường viền tim
                 let t = Math.random() * Math.PI * 2;
                 let pos = heartFunc(t);
-                
-                // 2. Tạo hiệu ứng "Filling" (Lấp đầy bên trong)
-                // Dùng căn bậc 2 của random để phân bố đều hạt từ tâm ra viền
-                // dir: độ phân tán. Nếu dir < 1 thì hạt nằm trong tim.
                 let dir = Math.sqrt(Math.random()); 
-                
-                // Biến đổi vị trí:
-                // Tâm màn hình + (Tọa độ tim * độ lớn * độ phân tán)
-                let scale = 16; // Độ to cơ bản
-                
-                // Tạo 2 lớp: Lớp lõi (dày đặc) và Lớp hào quang (bay xa hơn)
                 let type = Math.random();
-                if (type < 0.7) {
-                    // 70% hạt nằm gọn trong trái tim (Solid core)
-                    dir = dir * 0.9; 
-                } else {
-                    // 30% hạt bay lơ lửng bên ngoài tạo glow (Aura)
-                    dir = dir * 1.2 + 0.2;
-                }
+                if (type < 0.7) dir = dir * 0.9; 
+                else dir = dir * 1.2 + 0.2;
 
-                this.targetX = pos.x * scale * dir + width / 2;
-                this.targetY = -pos.y * scale * dir + height / 2 - 60; // Dời lên trên chút
+                // Dùng heartScale đã tính toán ở hàm resize
+                this.targetX = pos.x * heartScale * dir + width / 2;
+                this.targetY = -pos.y * heartScale * dir + height / 2 + heartOffsetY;
                 
-                // Vị trí thực tế
                 this.x = this.targetX;
                 this.y = this.targetY;
-
-                // Thuộc tính chuyển động
-                this.size = Math.random() * 2; // Kích thước ngẫu nhiên
+                this.size = Math.random() * 2; 
                 this.baseSize = this.size;
-                this.blinkSpeed = Math.random() * 0.1 + 0.02; // Tốc độ nhấp nháy
+                this.blinkSpeed = Math.random() * 0.1 + 0.02;
                 this.blinkOffset = Math.random() * Math.PI * 2;
-                
-                // Màu sắc Galaxy: Hồng, Tím, Xanh, Trắng
                 const colors = ['#ff0055', '#ff3399', '#cc33ff', '#6600ff', '#ffffff', '#ffccff'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                
-                // Độ rung (Jitter) riêng cho từng hạt
                 this.jitterX = (Math.random() - 0.5) * 20; 
                 this.jitterY = (Math.random() - 0.5) * 20;
             }
-
             update(beatScale, time) {
-                // Hiệu ứng 1: Nhấp nháy (Twinkle)
-                // Thay đổi kích thước theo hàm sin để tạo cảm giác lấp lánh
                 this.size = this.baseSize + Math.sin(time * 5 + this.blinkOffset) * 0.5;
                 if (this.size < 0) this.size = 0;
-
-                // Hiệu ứng 2: Di chuyển theo nhịp tim nhưng mềm mại hơn
-                // Tính vector từ tâm
-                let cx = width / 2;
-                let cy = height / 2 - 60;
                 
-                // Vị trí mong muốn khi tim đập (Target Position)
+                // Recalculate center (in case resizing happens during animation)
+                let cx = width / 2;
+                let cy = height / 2 + heartOffsetY;
+
                 let currentTargetX = cx + (this.targetX - cx) * beatScale;
                 let currentTargetY = cy + (this.targetY - cy) * beatScale;
-
-                // Thêm độ nhiễu (Noise) để hạt trông như đang bay nhẹ
-                // time * tốc độ -> tạo chuyển động xoay nhẹ
                 let noiseX = Math.cos(time + this.jitterX) * 2; 
                 let noiseY = Math.sin(time + this.jitterY) * 2;
-
                 this.x = currentTargetX + noiseX;
                 this.y = currentTargetY + noiseY;
             }
-
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = this.color;
-                // Hiệu ứng phát sáng chồng lớp (Quan trọng để tạo ra vẻ Galaxy)
                 ctx.globalCompositeOperation = 'lighter'; 
-                ctx.shadowBlur = 5; // Đổ bóng sáng
-                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 5; ctx.shadowColor = this.color;
                 ctx.fill();
-                ctx.shadowBlur = 0; // Reset để không nặng máy
-                ctx.globalCompositeOperation = 'source-over';
+                ctx.shadowBlur = 0; ctx.globalCompositeOperation = 'source-over';
             }
         }
 
-        /* --- FIREWORKS (PHÁO HOA) --- */
         class Firework {
             constructor() {
                 this.x = Math.random() * width; this.y = height;
@@ -253,7 +265,7 @@
                     if (this.y <= this.targetY) this.explode();
                 } else {
                     this.particles.forEach((p, i) => {
-                        p.x += p.vx; p.y += p.vy; p.alpha -= 0.02; p.vy += 0.05; // Có trọng lực rơi xuống
+                        p.x += p.vx; p.y += p.vy; p.alpha -= 0.02; p.vy += 0.05;
                         if (p.alpha <= 0) this.particles.splice(i, 1);
                     });
                 }
@@ -278,51 +290,43 @@
             }
         }
 
-        // Khởi tạo
-        const heartParticles = [];
+        let heartParticles = [];
         const fireworks = [];
-        for (let i = 0; i < CONFIG.particleCount; i++) heartParticles.push(new GalaxyParticle());
+
+        function initParticles() {
+            heartParticles = [];
+            for (let i = 0; i < CONFIG.particleCount; i++) heartParticles.push(new GalaxyParticle());
+        }
 
         function createDecorations() {
             const layer = document.getElementById('decoration-layer');
+            layer.innerHTML = ''; // Clear old stickers
             for(let i=0; i<CONFIG.stickerCount; i++) {
                 const el = document.createElement('div');
                 el.className = 'sticker';
                 el.innerText = CONFIG.stickers[Math.floor(Math.random() * CONFIG.stickers.length)];
-                let x, y;
-                do { x = Math.random() * 100; y = Math.random() * 100; } 
-                while (x > 35 && x < 65 && y > 25 && y < 75); // Tránh vùng giữa tim
-                el.style.left = x + '%'; el.style.top = y + '%';
-                el.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+                
+                // Random position responsive
+                let x = Math.random() * 100;
+                let y = Math.random() * 100;
+                
+                el.style.left = x + '%'; 
+                el.style.top = y + '%';
+                // Font size responsive theo viewport width (vw)
+                el.style.fontSize = (Math.random() * 3 + 2) + 'vw'; 
                 el.style.animationDuration = (Math.random() * 3 + 4) + 's';
                 layer.appendChild(el);
             }
         }
 
-        // Loop chính
-        let frame = 0, showHeart = false;
-        let time = 0;
+        let frame = 0, showHeart = false, time = 0;
         function animate() {
-            // Hiệu ứng mờ dần để tạo đuôi (Trail effect) cho pháo hoa
             ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; 
             ctx.fillRect(0, 0, width, height);
-            
-            time += 0.01; // Thời gian trôi
-
+            time += 0.01;
             if (showHeart) {
-                // Nhịp tim phức tạp hơn: Đập nhanh rồi nghỉ (Giống tim thật)
-                // Dùng công thức pow(sin, 63) để tạo cú đập dứt khoát
-                let beat = 1 + 0.1 * Math.pow(Math.sin(time * 3), 63); 
-                // Hoặc dùng cái cũ nếu thích êm đềm: beat = 1 + 0.08 * Math.sin(time * 3);
-                
-                // Nhưng ta dùng cái scale nhẹ nhàng hơn cho Galaxy
                 let smoothBeat = 1 + 0.05 * Math.sin(time * 4);
-
-                heartParticles.forEach(p => { 
-                    p.update(smoothBeat, time); 
-                    p.draw(); 
-                });
-
+                heartParticles.forEach(p => { p.update(smoothBeat, time); p.draw(); });
                 if (Math.random() < 0.03) fireworks.push(new Firework());
                 for (let i = fireworks.length - 1; i >= 0; i--) {
                     fireworks[i].update(); fireworks[i].draw();
@@ -332,9 +336,6 @@
             requestAnimationFrame(animate);
         }
 
-        /* ==========================================
-           LOGIC KỊCH BẢN (KHÔNG ĐỔI)
-           ========================================== */
         const counterEl = document.getElementById('counter');
         const dateEl = document.getElementById('date');
         const finalMsgEl = document.getElementById('final-msg');
@@ -348,11 +349,12 @@
                 if (i < 19) {
                     playTick();
                 } else {
-                    // SỰ KIỆN SỐ 19
                     counterEl.style.color = '#ff3399';
                     counterEl.classList.add('zoom-in');
                     counterEl.innerText = "WELCOME 19";
-                    counterEl.style.fontSize = "10vw";
+                    // Font size cho Welcome 19
+                    counterEl.style.fontSize = window.innerWidth < 768 ? "15vw" : "10vw"; 
+                    
                     bgMusic.volume = 0.6;
                     bgMusic.play().catch((e) => console.log(e));
                 }
